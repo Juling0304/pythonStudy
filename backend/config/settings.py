@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'corsheaders',
     'boards.apps.BoardsConfig',
+    'common.apps.CommonConfig',  
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
