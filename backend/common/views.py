@@ -1,19 +1,33 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-# from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.hashers import check_password
 from .models import User
+from .serializers import UserJWTSignupSerializer, JWTLoginSerializer
 
 @api_view(['POST'])
-def test(request):
-    data = {'message': 'here is common'}
-    # data = request.data
-    id = request.POST.get('id')
-    name = request.POST.get('name')
-    email = request.POST.get('email')
-    password = request.POST.get('password')
-    # hashed = make_password(password)
+def user_join(request):
+    data = request.POST
+    serializer = UserJWTSignupSerializer(data=data)
+    valid = serializer.is_valid()
+    
+    if valid:
+        serializer.save()
+        new_user = serializer.data
+        # 직렬화 테스트 save() return 값은 User 모델이라 바로 돌려주면 직렬화 실패 오류 발생
+        return Response({ 'is_success' : True , 'user' : new_user })
+    else:
+        return Response(serializer.errors)
 
-    newUser = User.objects.create_user(id=id, name=name, email=email, password=password)
+@api_view(['POST'])
+def user_login(request):
+    user_id = request.POST.get('id')
+    user_password = request.POST.get('password')
 
-
-    return Response(data)
+    data = request.POST
+    serializer = JWTLoginSerializer(data=data)
+    valid = serializer.is_valid()
+    if valid:
+        valid = serializer.validated_data
+        return Response({ 'is_success' : True, 'data' : valid })
+    else:
+        return Response(serializer.errors)

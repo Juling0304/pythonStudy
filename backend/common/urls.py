@@ -1,8 +1,9 @@
 from django.urls import path
-from common.views import test
+from common.views import user_join, user_login
 
 app_name = 'common'
 
 urlpatterns = [
-    path('test/', test),
+    path('user_join/', user_join),
+    path('user_login/', user_login),
 ]
