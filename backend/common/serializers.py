@@ -36,7 +36,6 @@ class UserJWTSignupSerializer(serializers.ModelSerializer):
         user_id = data.get('id',None)
         if User.objects.filter(id=user_id).exists():
             raise serializers.ValidationError({
-                'is_success': False,
                 'status': 'exist',
                 'message': '이미 가입한 ID 입니다.'
             })
@@ -66,13 +65,11 @@ class JWTLoginSerializer(serializers.ModelSerializer):
 
             if not user.check_password(password):
                 raise serializers.ValidationError({
-                'is_success': False,
                 'status': 'wrong',
                 'message': '비밀번호를 확인해주세요.'
             })
         else:
             raise serializers.ValidationError({
-                'is_success': False,
                 'status': 'not_exist',
                 'message': '가입되지 않은 ID 입니다.'
             })

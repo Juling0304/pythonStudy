@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import * as useFetch from '../lib/useFetch'
+import * as useFetch from '../../lib/useFetch'
 
 
 // config.js
@@ -22,7 +22,7 @@ const Home = () => {
   // Render the component JSX
   return (
     <div>
-      <h1>Welcome to Test</h1>
+      <h1 className='text-xl'>Welcome to Test</h1>
       <p>{data}</p>
     </div>
   )

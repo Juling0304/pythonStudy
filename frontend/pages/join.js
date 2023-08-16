@@ -6,7 +6,7 @@ import JoinError from '../components/joinError'
 
 function JoinPage() {
 
-    const router = useRouter();
+    const router = useRouter()
 
     const [id, setId] = useState("")
     const [password, setPassword] = useState("")
@@ -48,11 +48,11 @@ function JoinPage() {
             const headers = useFetch.forPostMethod(formdata)
             const res = await useFetch.asyncFetchData('http://127.0.0.1:8000/common/user_join/', headers)
             const json = await res.json()
-            
+
             if (json.is_success) {
                 router.push('/')
             } else {
-                setError(json.message)
+                setError(json.error.message[0])
             }
         } else {
             alert('내용을 모두 입력해주세요.')
