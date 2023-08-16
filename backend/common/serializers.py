@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import User, Menu
 from rest_framework_simplejwt.tokens import RefreshToken
 
 class UserJWTSignupSerializer(serializers.ModelSerializer):
@@ -85,3 +85,21 @@ class JWTLoginSerializer(serializers.ModelSerializer):
         }
 
         return data
+
+
+class MenuSerializer(serializers.ModelSerializer):
+    title = serializers.CharField(
+        required=True,
+    )
+
+    route = serializers.CharField(
+        required=True,
+    )
+    
+    sort = serializers.IntegerField(
+        required=True
+    )
+
+    class Meta(object):
+        model = Menu
+        fields = ['title', 'route', 'sort']

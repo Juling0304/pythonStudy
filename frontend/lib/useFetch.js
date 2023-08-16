@@ -41,6 +41,33 @@ export function forPostMethodWithJWT(body=null){
     }
 }
 
+export function forJWT(action){
+    const formData = new FormData()
+
+    if(action === 'verify'){
+        const token = sessionStorage.getItem('access')
+        formData.append('token',token)
+    } else if(action === 'refresh'){
+        const token = sessionStorage.getItem('refresh')
+        formData.append('refresh',token)
+    } else {
+        return false
+    }
+
+    return {        
+        method: 'Post',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: "same-origin",
+        headers:{
+            // 'Content-Type': 'application/json'
+            'Accept': '*/*'
+        },
+        body: formData
+    }
+
+}
+
 export async function asyncFetchData(url, headers) {
     return await fetch(url,headers)
 }

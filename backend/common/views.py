@@ -2,7 +2,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth.hashers import check_password
 from .models import User, Menu
-from .serializers import UserJWTSignupSerializer, JWTLoginSerializer
+from .serializers import UserJWTSignupSerializer, JWTLoginSerializer, MenuSerializer
+from rest_framework.generics import ListAPIView
+
 
 @api_view(['POST'])
 def user_join(request):
@@ -37,5 +39,6 @@ def jwt_test(request):
 
 @api_view(['POST'])
 def get_menu(request):
-    menu = Menu.objects.all()
-    return Response('aa')
+    menus = Menu.objects.all()
+    serializer = MenuSerializer(menus,many=True)
+    return Response(serializer.data)
