@@ -7,7 +7,7 @@ from rest_framework.pagination import PageNumberPagination
 ################################################################
 # pagenation 파일을 따로 만들어서 import
 class list_post_pagenation(PageNumberPagination):
-    page_size = 3
+    page_size = 10
 
 def info_pagenations(paginator, total_items):
     items_per_page = paginator.page_size

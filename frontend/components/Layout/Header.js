@@ -73,7 +73,7 @@ function Header() {
                         <div className="flex items-center space-x-1">
                             {menu.map((item, index) => {
                                 return (
-                                    <Link href={item.route} key={index} className="py-5 px-3 text-gray-700 hover:text-gray-900" >{item.title}</Link>
+                                    <Link href={item.route} key={item.title} className="py-5 px-3 text-gray-700 hover:text-gray-900" >{item.title}</Link>
                                 )
                             })}
                         </div>

@@ -10,6 +10,9 @@ class PostSerializer(serializers.ModelSerializer):
         )
 
 class ListPostSerializer(serializers.ModelSerializer):
+    id = serializers.CharField(
+        required=True,
+    )
     subject = serializers.CharField(
         required=True,
     )
@@ -28,5 +31,5 @@ class ListPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = (
-            'subject', 'content', 'author', 'create_date', 'modify_date'
+            'id', 'subject', 'content', 'author', 'create_date', 'modify_date'
         )
