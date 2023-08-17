@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import User, Menu
 from rest_framework_simplejwt.tokens import RefreshToken
 
-class UserJWTSignupSerializer(serializers.ModelSerializer):
+class JWTSignupSerializer(serializers.ModelSerializer):
     id = serializers.CharField(
         required=True,
         max_length=150
@@ -44,6 +44,7 @@ class UserJWTSignupSerializer(serializers.ModelSerializer):
 class JWTLoginSerializer(serializers.ModelSerializer):
     id = serializers.CharField(
         required=True,
+        max_length=150
     )
 
     password = serializers.CharField(
@@ -80,6 +81,7 @@ class JWTLoginSerializer(serializers.ModelSerializer):
 
         data = {
             'id': user.id,
+            'name': user.name,
             'refresh': refresh,
             'access': access,
         }

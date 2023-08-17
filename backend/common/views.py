@@ -2,14 +2,13 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth.hashers import check_password
 from .models import User, Menu
-from .serializers import UserJWTSignupSerializer, JWTLoginSerializer, MenuSerializer
-from rest_framework.generics import ListAPIView
+from .serializers import JWTSignupSerializer, JWTLoginSerializer, MenuSerializer
 
 
 @api_view(['POST'])
 def user_join(request):
     data = request.POST
-    serializer = UserJWTSignupSerializer(data=data)
+    serializer = JWTSignupSerializer(data=data)
     valid = serializer.is_valid()
     
     if valid:
@@ -39,6 +38,6 @@ def jwt_test(request):
 
 @api_view(['POST'])
 def get_menu(request):
-    menus = Menu.objects.all()
+    menus = Menu.objects.all().order_by('sort')
     serializer = MenuSerializer(menus,many=True)
     return Response(serializer.data)

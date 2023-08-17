@@ -1,12 +1,10 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react'
-import Link from 'next/link'
 import Layout from '../components/Layout/Layout'
 
 function MainPage() {
     return (
         <Layout>
-            <div className="test">
-                MainPage is a React component
+            <div className="flex items-center justify-center bg-green-100 min-h-screen text-5xl font-bold">
+                Welcome!
             </div>
         </Layout>
     )

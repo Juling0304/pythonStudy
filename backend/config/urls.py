@@ -16,10 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from boards.views import hello_rest_api
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/hello/', hello_rest_api, name='hello_rest_api'),
     path('common/', include('common.urls')),
+    path('boards/', include('boards.urls')),
 ]

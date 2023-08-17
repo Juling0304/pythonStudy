@@ -29,16 +29,19 @@ function IndexPage() {
   async function onClickLogin() {
     if (id !== '' && password !== '') {
       const formData = new FormData()
-      formData.append('id',id)
-      formData.append('password',password)
+      formData.append('id', id)
+      formData.append('password', password)
       const headers = useFetch.forPostMethod(formData)
 
-      const res =  await useFetch.asyncFetchData('http://127.0.0.1:8000/common/user_login/', headers)
+      const res = await useFetch.asyncFetchData('http://127.0.0.1:8000/common/user_login/', headers)
       const json = await res.json()
 
-      if(json.is_success){
-        sessionStorage.setItem('access',json.data.access)
-        sessionStorage.setItem('refresh',json.data.refresh)
+      if (json.is_success) {
+        console.log(json.data)
+        sessionStorage.setItem('access', json.data.access)
+        sessionStorage.setItem('refresh', json.data.refresh)
+        sessionStorage.setItem('id', json.data.id)
+        sessionStorage.setItem('name', json.data.name)
 
         router.push('/main')
       } else {
@@ -81,14 +84,14 @@ function IndexPage() {
             {/* <a href="#" class="text-xs text-gray-600 hover:underline">Forget Password?</a> */}
             <div className="mt-6">
               <button
-              onClick={onClickLogin}
+                onClick={onClickLogin}
                 className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-green-700 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600">
                 Login
               </button>
             </div>
           </div>
         </div>
-        <p className="mt-8 text-xs font-light text-center text-gray-700"> Don't have an account? 
+        <p className="mt-8 text-xs font-light text-center text-gray-700"> Don't have an account?
           <Link className="font-medium text-green-600 hover:underline" href="/join">
             회원가입
           </Link>

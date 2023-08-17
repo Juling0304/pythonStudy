@@ -10,6 +10,20 @@ export function forGetMethod(){
     }
 }
 
+export function forGetMethodWithJWT(){
+    const accessToken = sessionStorage.getItem('access')
+
+    return {        
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: "same-origin",
+        headers:{
+            'Authorization': 'Bearer ' + accessToken
+        }
+    }
+}
+
 export function forPostMethod(body=null){
     return {        
         method: 'Post',
