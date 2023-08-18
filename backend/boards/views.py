@@ -38,7 +38,7 @@ def post(request):
             serializer = ListPostSerializer(post)
 
             reply = post.post_reply.all()
-            reply_serializer = ReplySerializer(reply)
+            reply_serializer = ReplySerializer(reply, many=True)
             test = reply_serializer.data
 
             return Response({'is_success': True, 'data' : {'data' : serializer.data , 'reply' : reply_serializer.data }})
