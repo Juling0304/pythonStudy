@@ -105,3 +105,14 @@ class MenuSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = Menu
         fields = ['title', 'route', 'sort']
+
+class VoterSerializer(serializers.ModelSerializer):
+    id = serializers.CharField(
+        required=True,
+        max_length=150
+    )
+    name = serializers.CharField()
+
+    class Meta(object):
+        model = User
+        fields = ['id', 'name']

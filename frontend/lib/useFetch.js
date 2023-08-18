@@ -55,6 +55,23 @@ export function forPostMethodWithJWT(body=null){
     }
 }
 
+export function forPutMethodWithJWT(body=null){
+
+    const accessToken = sessionStorage.getItem('access')
+
+    return {        
+        method: 'Put',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: "same-origin",
+        headers:{
+            'Accept': '*/*',
+            'Authorization': 'Bearer ' + accessToken
+        },
+        body: body
+    }
+}
+
 export function forJWT(action){
     const formData = new FormData()
 

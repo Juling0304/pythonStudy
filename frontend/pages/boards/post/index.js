@@ -1,13 +1,41 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Layout from '../../../components/Layout/Layout'
 import * as useFetch from '../../../lib/useFetch'
+import Link from 'next/link'
 
-function BoardsIndex() {
+function Post() {
     const [subject, setSubject] = useState("")
     const [content, setContent] = useState("")
+    const [mode, setMode] = useState(null)
 
     const router = useRouter()
+
+    useEffect(() => {
+        async function fetchData() {
+            if (router.query.id !== undefined) {
+                const headers = useFetch.forGetMethodWithJWT()
+                setMode('modify')
+                const res =  await useFetch.asyncFetchData('http://127.0.0.1:8000/boards/post/?mode=' + mode + '&id=' + router.query.id, headers)
+    
+                if(res.status === 401){
+                    alert('로그인 유지 시간이 초과되었습니다.')
+                    router.reload()
+                } else if(res.status === 200) {
+                    const json = await res.json()
+                    if(json.is_success) {
+                        console.log(json)
+                        setSubject(json.data.subject)
+                        setContent(json.data.content)
+                    } else {
+                        alert(json.message)
+                        router.push('/boards/')
+                    }
+                }
+            }
+        }
+        fetchData()
+    },[router.query.id, router, mode])
 
     const setOnChange = (event) => {
         const {
@@ -29,11 +57,20 @@ function BoardsIndex() {
     async function onClickWrite() {
         if (subject !== '' && content !== '') {
             const formData = new FormData()
+            formData.append('id', router.query.id)
             formData.append('subject', subject)
             formData.append('content', content)
-            const headers = useFetch.forPostMethodWithJWT(formData)
 
-            const res = await useFetch.asyncFetchData('http://127.0.0.1:8000/boards/write_post/', headers)
+            let headers = ''
+
+            if(mode == null){
+                headers = useFetch.forPostMethodWithJWT(formData)
+            } else if(mode === 'modify') {
+                headers = useFetch.forPutMethodWithJWT(formData)
+            }
+
+
+            const res = await useFetch.asyncFetchData('http://127.0.0.1:8000/boards/post/', headers)
             const json = await res.json()
 
             if(res.status === 401){
@@ -54,8 +91,8 @@ function BoardsIndex() {
 
     return (
         <Layout>
-            <div className="flex items-center justify-center min-h-screen bg-white border-t-4 border-green-600">
-                <div className='w-3/4 p-6 bg-green-100 rounded-md drop-shadow-md'>
+            <div className="flex items-center justify-center bg-white border-t-4 border-green-500">
+                <div className='w-3/4 mt-10 p-6 bg-green-100 rounded-md drop-shadow-md'>
                     <div className='p-6 bg-white rounded-md '>
                         <div className='my-5'>
                             <span className='font-bold text-2xl'>글 제목 : </span>
@@ -80,9 +117,15 @@ function BoardsIndex() {
                         </div>
                         <button
                             onClick={onClickWrite}
-                            className="w-[120px] h-[45px] py-2 px-3 bg-red-300 hover:bg-red-500 text-black-900 hover:text-black-800 rounded transition duration-300">
+                            className="mx-1 py-2 px-3 bg-red-200 hover:bg-red-400 text-black-900 hover:text-black-800 rounded transition duration-300">
                             작성
                         </button>
+                        <Link 
+                            href="/boards/"
+                            className="mx-1 py-2 px-3 bg-red-200 hover:bg-red-400 text-black-900 hover:text-black-800 rounded transition duration-300">
+                                리스트
+                        </Link>
+
                     </div>
                 </div>
 
@@ -91,4 +134,4 @@ function BoardsIndex() {
     )
 }
 
-export default BoardsIndex
+export default Post
