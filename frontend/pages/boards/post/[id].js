@@ -10,6 +10,7 @@ function PostDetail(){
     const router = useRouter()
     const [data, setData] = useState([])
     const [modify, setModify] = useState(false)
+    const [replys, setReplys] = useState([])
     const [reply, setReply] = useState('')
 
     useEffect(() => {
@@ -26,6 +27,7 @@ function PostDetail(){
                     console.log(json.data)
                     if(json.is_success) {
                         setData(json.data.data)
+                        setReplys(json.data.data.post_reply)
                     } else {
                         alert(json.message)
                     }
@@ -143,21 +145,23 @@ function PostDetail(){
                     <button onClick={onClickVote} className="mx-1 py-2 px-3 bg-red-200 hover:bg-red-400 text-black-900 hover:text-black-800 rounded transition duration-300">추천</button>
                 </div>
             </div>
+            { replys.length > 0 &&
             <div className="flex items-center justify-center mb-2">
                 <div className="border-collapse border border-green-400 w-3/4 shadow-md p-2">
-                    <div>
-                        <div className='mb-2'>답변 : </div>
-                        <div className="flex items-center justify-center mb-2">
-                        </div>
-                    </div>
-                    <div>
-                        <div className='mb-2'>답변 : </div>
-                        <div className="flex items-center justify-center mb-2">
-                        </div>
-                    </div>
+                    {replys.map((item, index) => {
+                        return (
+                            <div key={index} className='text-xs border-b-2 border-green-100'>
+                                <div className='mb-2'>답변 : </div>
+                                <div className="flex mb-2">
+                                    <div className='w-5/6'>{item.content}</div>
+                                    <div>작성자 : {item.writer}</div>
+                                </div>
+                            </div>
+                        )
+                    })}
                 </div>
-                
             </div>
+            }
             <div className="flex items-center justify-center">
                 <div className="border-collapse border border-green-400 w-3/4 shadow-md p-2">
                     <div className='mb-2'>내용 : </div>

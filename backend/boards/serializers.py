@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Post, Reply
 from common.models import User
 from common.serializers import VoterSerializer
+from .serializers_reply import ReplySerializer
 
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
@@ -12,6 +13,7 @@ class PostSerializer(serializers.ModelSerializer):
 
 class ListPostSerializer(serializers.ModelSerializer):
     voter = VoterSerializer(many=True)
+    post_reply = ReplySerializer(many=True)
 
     id = serializers.CharField(
         required=True,
@@ -33,11 +35,4 @@ class ListPostSerializer(serializers.ModelSerializer):
     modify_date = serializers.DateTimeField()
     class Meta:
         model = Post
-        fields = ('id', 'subject', 'content', 'author', 'voter', 'create_date', 'modify_date')
-
-class ReplySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Reply
-        fields = (
-            'post', 'content', 'writer'
-        )
+        fields = ('id', 'subject', 'content', 'author', 'voter', 'create_date', 'modify_date','post_reply')

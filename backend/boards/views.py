@@ -37,11 +37,7 @@ def post(request):
                 post = Post.objects.get(id=request.GET.get('id'))
             serializer = ListPostSerializer(post)
 
-            reply = post.post_reply.all()
-            reply_serializer = ReplySerializer(reply, many=True)
-            test = reply_serializer.data
-
-            return Response({'is_success': True, 'data' : {'data' : serializer.data , 'reply' : reply_serializer.data }})
+            return Response({'is_success': True, 'data' : {'data' : serializer.data }})
         except Post.DoesNotExist:
             return Response({'is_success': False, 'message' : 'Post가 존재하지 않습니다.'})
     if request.method == 'POST':
