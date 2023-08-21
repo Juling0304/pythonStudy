@@ -16,7 +16,7 @@ function Post() {
             if (router.query.id !== undefined) {
                 const headers = useFetch.forGetMethodWithJWT()
                 setMode('modify')
-                const res =  await useFetch.asyncFetchData('http://127.0.0.1:8000/boards/post/?mode=' + mode + '&id=' + router.query.id, headers)
+                const res =  await useFetch.asyncFetchData(process.env.NEXT_PUBLIC_BASE_URL + 'boards/post/?mode=' + mode + '&id=' + router.query.id, headers)
     
                 if(res.status === 401){
                     alert('로그인 유지 시간이 초과되었습니다.')
@@ -24,9 +24,8 @@ function Post() {
                 } else if(res.status === 200) {
                     const json = await res.json()
                     if(json.is_success) {
-                        console.log(json)
-                        setSubject(json.data.subject)
-                        setContent(json.data.content)
+                        setSubject(json.data.data.subject)
+                        setContent(json.data.data.content)
                     } else {
                         alert(json.message)
                         router.push('/boards/')
@@ -70,7 +69,7 @@ function Post() {
             }
 
 
-            const res = await useFetch.asyncFetchData('http://127.0.0.1:8000/boards/post/', headers)
+            const res = await useFetch.asyncFetchData(process.env.NEXT_PUBLIC_BASE_URL + 'boards/post/', headers)
             const json = await res.json()
 
             if(res.status === 401){

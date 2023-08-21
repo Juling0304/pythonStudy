@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'boards.apps.BoardsConfig',
     'common.apps.CommonConfig',  
+    'pdapp.apps.PdappConfig',  
     'rest_framework',
     'rest_framework_simplejwt',
     'django.contrib.admin',

@@ -18,7 +18,7 @@ function BoardsIndex() {
         async function fetchData() {
             const headers = useFetch.forGetMethodWithJWT()
 
-            const res =  await useFetch.asyncFetchData('http://127.0.0.1:8000/boards/list_post/?page=' + page, headers)
+            const res =  await useFetch.asyncFetchData(process.env.NEXT_PUBLIC_BASE_URL + 'boards/list_post/?page=' + page, headers)
 
             if(res.status === 401){
                 alert('로그인 유지 시간이 초과되었습니다.')

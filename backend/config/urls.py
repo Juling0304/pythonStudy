@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('common/', include('common.urls')),
     path('boards/', include('boards.urls')),
+    path('pdapp/', include('pdapp.urls')),
 ]

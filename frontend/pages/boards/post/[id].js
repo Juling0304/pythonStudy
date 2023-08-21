@@ -17,7 +17,7 @@ function PostDetail(){
         async function fetchData() {
             if (router.query.id !== undefined) {
                 const headers = useFetch.forGetMethodWithJWT()
-                const res =  await useFetch.asyncFetchData('http://127.0.0.1:8000/boards/post/?id=' + router.query.id, headers)
+                const res =  await useFetch.asyncFetchData(process.env.NEXT_PUBLIC_BASE_URL + 'boards/post/?id=' + router.query.id, headers)
     
                 if(res.status === 401){
                     alert('로그인 유지 시간이 초과되었습니다.')
@@ -53,7 +53,7 @@ function PostDetail(){
     
             const headers = useFetch.forPostMethodWithJWT(formData)
     
-            const res = await useFetch.asyncFetchData('http://127.0.0.1:8000/boards/post/vote/', headers)
+            const res = await useFetch.asyncFetchData(process.env.NEXT_PUBLIC_BASE_URL + 'boards/post/vote/', headers)
             const json = await res.json()
     
             if(res.status === 401){
@@ -80,7 +80,7 @@ function PostDetail(){
         
                 const headers = useFetch.forPostMethodWithJWT(formData)
         
-                const res = await useFetch.asyncFetchData('http://127.0.0.1:8000/boards/reply/', headers)
+                const res = await useFetch.asyncFetchData(process.env.NEXT_PUBLIC_BASE_URL + 'boards/reply/', headers)
                 const json = await res.json()
 
                 if(res.status === 401){
