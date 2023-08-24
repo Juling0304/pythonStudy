@@ -11,9 +11,10 @@ backend :
     pip install and django migrate
     python manage.py runserver
     ( localhost:8000 )
+  
 fronted :
     npm install
     npm run dev
     ( localhost:3000 )
-
+  
 modify frontend/.env file when backend port changes
