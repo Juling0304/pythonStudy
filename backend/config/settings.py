@@ -33,6 +33,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'corsheaders',
+    'channels',
+    "daphne",
+    'chat.apps.ChatConfig',
     'boards.apps.BoardsConfig',
     'common.apps.CommonConfig',  
     'pdapp.apps.PdappConfig',  
@@ -167,3 +170,6 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
     'TOKEN_USER_CLASS': 'common.User',
 }
+
+ASGI_APPLICATION = "config.asgi.application"
+CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}
