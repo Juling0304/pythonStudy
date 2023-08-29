@@ -1,6 +1,7 @@
 from django.urls import path
 from pdapp.views_first import basic, rank, expending, rolling, ewm
-from pdapp.views_second import applymap, pipe, agg, transform, loc, head
+from pdapp.views_second import applymap, pipe, agg, transform, loc, head, mortgage, diff, dtyps, pdfilter, sample
+from pdapp.views_third import pdnull
 
 app_name = 'pdapp'
 
@@ -16,4 +17,10 @@ urlpatterns = [
     path('transform/', transform),
     path('loc/', loc),
     path('head/', head),
+    path('mortgage/', mortgage),
+    path('diff/', diff),
+    path('dtyps/', dtyps),
+    path('pdfilter/', pdfilter),
+    path('sample/', sample),
+    path('pdnull/', pdnull),
 ]

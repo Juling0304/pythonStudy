@@ -79,3 +79,116 @@ def head(request):
     # print(df.tail(3))
     print(df.tail(-3))
     return Response({'head':'here'})
+
+@api_view(['GET'])
+def mortgage(request):
+    principal = 500000.0 # 대출 총 금액
+    rate = 0.05 # 연 이율
+    payment = 2684.11 # 매 월 납입금
+    total_paid = 0.0
+    month = 0
+
+    while principal > 0:
+    # while 1 > month:
+        principal = principal * (1+rate/12) - payment
+        total_paid = round(total_paid + payment, 2)
+        month = month + 1
+        print('총 납입액 : ', total_paid, month, '회 납입')
+
+
+    # print('Total paid', total_paid)
+    # print('Total month', month)
+    return Response({'mortgage':'here'})
+
+@api_view(['GET'])
+def diff(request):
+    col = ['col1','col2','col3']
+    row = ['A','B','C']
+    df = pd.DataFrame(data=[[10,20,10], [80,30,60], [20,10,70]],index=row,columns=col)
+    # lt, gt, le, ge, eq, ne
+    # less than(>), grater than(<), less equal(>=), grater equal(<=), equal(==), not equal(!=)
+    # print(df.gt(20))
+
+    # df2 = pd.DataFrame([[50],[30],[50]],index=row,columns=['col2'])
+    print(df)
+    # print(df2)
+    # print(df.ge(df2))
+
+    row_mul = [['U','U','U','D','D','D'],['A','B','C','A','B','C']]
+    df_mul = pd.DataFrame(data=[[10,20,10],
+                                [80,30,60],
+                                [20,10,70],
+                                [30,70,60],
+                                [10,90,40],
+                                [50,30,80]],index=row_mul,columns=col)
+    print(df_mul)
+
+    # level 1로 설정해서 ABC를 index로 갖는 두 df처럼 비교
+    print(df.ge(df_mul,level=1))
+
+    return Response({'diff':'here'})
+
+@api_view(['GET'])
+def dtyps(request):
+    col1 = [1, 2, 3, 4, 5]
+    col2 = ['one', 'two', 'three', 'four', 'five']
+    col3 = [1.5, 2.5, 3.5, 4.5, 5.5]
+    col4 = [True, False, False, True, True]
+    df = pd.DataFrame({"col1": col1, "col2": col2, "col3": col3, "col4": col4})
+    print(df.dtypes)
+    # type 으로 추출 또는 제외 include, exclude 혼합사용 가능
+    result = df.select_dtypes(include=[float,bool])
+    print(result)
+
+    return Response({'dtyps':'here'})
+
+@api_view(['GET'])
+def clip(request):
+    col  = ['col1','col2','col3']
+    row  = ['row1','row2','row3']
+    data = [[-7,3,9],
+            [6,-8,1],
+            [-3,0,-7]]
+    df = pd.DataFrame(data,row,col)
+    s = pd.Series(data=[1,2,3],index=row)
+
+    # row1 은 -1 ~ 1, row2 는  -2 ~ 2, row3 은 -3 ~ 3
+    print(df.clip(-s,s,axis=0))
+
+
+    return Response({'clip':'here'})
+
+@api_view(['GET'])
+def pdfilter(request):
+    col  = ['alpha','beta','gamma','delta','epsilon']
+    row  = ['sigma','omega','lambda']
+    data = [[1,2,3,4,5],[6,7,8,9,10],[11,12,13,14,15]]
+    df = pd.DataFrame(data,row,col)
+    print(df)
+    # print(df.filter(items=['alpha','delta']))
+
+    # index 검색 시 axis=0 옵션 넣지 않는 경우 빈 값 리턴
+    # print(df.filter(items=['omega'], axis=0))
+
+    # print(df.filter(like='ta'))
+
+    # regex 는 정규식
+    print(df.filter(regex='^g'))
+    return Response({'filter':'here'})
+
+@api_view(['GET'])
+def sample(request):
+    col  = ['col1','col2','col3']
+    row  = ['row1','row2','row3','row4','row5']
+    data = [[1,2,3],[4,5,6],[7,8,9],[10,11,12],[13,14,15]]
+    df = pd.DataFrame(data,row,col)
+    # print(df)
+
+    # replace 는 중복 허용, 이 땐 총 row 보다 큰 df를 출력할 수 있다
+    # print(df.sample(10,replace=True))
+
+    # weights 는 가중치 , 해당 row가 뽑힐 확률?
+    s = pd.Series(data=[10,10,3,3,1],index=row)
+    print(df.sample(2,weights=s))
+
+    return Response({'sample':'here'})
