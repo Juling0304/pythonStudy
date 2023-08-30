@@ -30,6 +30,8 @@ function Header() {
                 sessionStorage.setItem('access',refreshJson.access)
 
 
+            }else if(res.status === 400){
+                router.push('/')
             }
 
             // 따로 빼도 되지만 어차피 인증 못하면 필요 없음
