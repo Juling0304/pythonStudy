@@ -1,4 +1,7 @@
 # pythonStudy
+
+JWT 인증, 웹 소켓 채팅, 게시판, Pandas 
+
 backend/
  - python : 3.11.3
  - django : 4.2.3
