@@ -26,7 +26,7 @@ for sentence in sentences:
 # print(preprocessed_sentences)
 
 vocab_sorted = sorted(vocab.items(), key = lambda x:x[1], reverse = True)
-# print(vocab_sorted)
+print(vocab_sorted)
 
 word_to_index = {}
 i = 0
@@ -35,7 +35,7 @@ for (word, frequency) in vocab_sorted :
         i = i + 1
         word_to_index[word] = i
 
-# print(word_to_index)
+print(word_to_index)
 
 vocab_size = 5
 
